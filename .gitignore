@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+
+# Google Cloud Credentials
+credentials.json
+
+# Media files / Temp files
+temp_*.wav
+temp_*.mp3
+backend/tmp/
+frontend/images/temp/
+*.mp4
+*.mov
+
+# OS
+.DS_Store
+Thumbs.db

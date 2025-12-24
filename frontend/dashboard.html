@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inflexa</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="index.html" class="nav-logo mb-8">
+                <div class="nav-logo-icon">I</div>
+                Inflexa
+            </a>
+
+            <nav>
+                <div class="text-xs font-bold text-muted uppercase mb-2 px-3">Menu</div>
+                <a href="#" class="sidebar-link active"><i class="fas fa-th-large w-5"></i> Dashboard</a>
+                <a href="#" class="sidebar-link"><i class="fas fa-folder w-5"></i> My Files</a>
+
+                <div class="text-xs font-bold text-muted uppercase mt-6 mb-2 px-3">Tools</div>
+                <a href="#" class="sidebar-link"><i class="fas fa-closed-captioning w-5"></i> Captions</a>
+                <a href="#" class="sidebar-link"><i class="fas fa-hands w-5"></i> ISL Converter</a>
+                <a href="#" class="sidebar-link"><i class="fas fa-book-reader w-5"></i> Simplifier</a>
+            </nav>
+
+            <div class="mt-auto pt-8">
+                <a href="index.html" class="sidebar-link text-danger"><i class="fas fa-sign-out-alt w-5"></i> Sign
+                    Out</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-area">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold mb-1">Dashboard</h1>
+                    <p class="text-muted">Manage and process your educational content.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="btn btn-secondary text-sm">Help</button>
+                    <div
+                        class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold">
+                        JD</div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Left: Input Area -->
+                <div class="col-span-2">
+
+                    <!-- 1. Video/Audio Upload Zone -->
+                    <div class="card mb-6 transition-all hover:shadow-md" id="zoneMedia">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center">
+                                <i class="fas fa-video"></i></div>
+                            <h2 class="text-lg font-bold">Upload Video / Audio</h2>
+                        </div>
+
+                        <div id="uploadZoneMedia"
+                            class="upload-zone p-8 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-film text-3xl text-gray-400 mb-2"></i>
+                            <h3 class="font-bold">Click or Drag Media Here</h3>
+                            <p class="text-xs text-muted mb-4">Max 10 mins or 15 MB • MP4, MP3, WAV</p>
+                            <input type="file" id="fileInputMedia" class="hidden" accept=".mp4,.mp3,.wav">
+                            <div id="fileNameMedia"
+                                class="hidden text-sm font-semibold text-teal-600 mt-2 bg-teal-50 inline-block px-3 py-1 rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Image/Diagram Upload Zone -->
+                    <div class="card mb-6 transition-all hover:shadow-md" id="zoneImage">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center">
+                                <i class="fas fa-image"></i></div>
+                            <h2 class="text-lg font-bold">Upload Image / Diagram</h2>
+                        </div>
+
+                        <div id="uploadZoneImage"
+                            class="upload-zone p-8 border-2 border-dashed border-gray-300 rounded-lg text-center cursor-pointer hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-image text-3xl text-gray-400 mb-2"></i>
+                            <h3 class="font-bold">Click or Drag Image Here</h3>
+                            <p class="text-xs text-muted mb-4">Max 5 MB • PNG, JPG</p>
+                            <input type="file" id="fileInputImage" class="hidden" accept=".png,.jpg,.jpeg">
+                            <div id="fileNameImage"
+                                class="hidden text-sm font-semibold text-purple-600 mt-2 bg-purple-50 inline-block px-3 py-1 rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Text Input (Fallback/Alternative) -->
+                    <div class="card mb-6 transition-all hover:shadow-md" id="zoneText">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
+                                <i class="fas fa-font"></i></div>
+                            <h2 class="text-lg font-bold">Text Processing</h2>
+                        </div>
+                        <textarea id="textInput"
+                            class="form-input w-full p-4 border rounded-md focus:ring-2 focus:ring-teal-500" rows="4"
+                            placeholder="Paste educational text here to simplify, translate to ISL gloss, or summarize... (Max 3000 chars)"></textarea>
+                        <div class="text-right text-xs text-muted mt-1"><span id="charCount">0</span>/3000</div>
+                    </div>
+                </div>
+
+                <!-- Right: Accessibility Options & Actions -->
+                <div>
+                    <div class="card bg-white sticky top-24">
+                        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-sliders-h text-gray-400"></i> Accessibility Options
+                        </h2>
+
+                        <div class="space-y-4" id="optionsPanel">
+
+                            <!-- Hearing -->
+                            <div>
+                                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Hearing
+                                    Impairment</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optCaptions" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Generate Captions</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optISLx" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">ISL Gloss Output</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Visual -->
+                            <div>
+                                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Visual
+                                    Impairment</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optDiagram" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Diagram Explanation</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optTTS" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Audio Narration</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Learning Support -->
+                            <div>
+                                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Learning
+                                    Support</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optSimplify" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Simplify Text (Dyslexia)</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optSummary" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Key Highlights (ADHD)</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" id="optCognitive" class="w-4 h-4 text-teal-600 rounded"
+                                            disabled>
+                                        <span class="text-sm">Step-by-Step (Cognitive)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-100">
+                            <button id="processBtn" class="btn btn-primary w-full shadow-lg" disabled>
+                                Process Content <i class="fas fa-magic ml-2"></i>
+                            </button>
+                            <div id="statusMessage" class="text-center text-xs text-danger mt-2 h-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="mt-12 hidden">
+                <h2 class="text-2xl font-bold mb-6 border-b pb-2">Generated Outputs</h2>
+
+                <div id="loadingSpinner" class="hidden text-center py-12">
+                    <div
+                        class="inline-block w-12 h-12 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin mb-4">
+                    </div>
+                    <p class="text-muted font-semibold animate-pulse">AI is analyzing your content...</p>
+                </div>
+
+                <div id="resultsGrid" class="grid grid-cols-2 gap-6">
+                    <!-- Results injected here -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>

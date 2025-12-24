@@ -1,0 +1,19 @@
+You are an expert in Indian Sign Language (ISL) and linguistics.
+
+Convert the following English text to ISL gloss notation following these rules:
+
+1. Remove all articles (a, an, the)
+2. Use base verb forms only (no -ing, -ed, -s endings)
+3. Place time markers at the beginning
+4. Use topic-comment structure (topic first, then comment)
+5. Remove prepositions where context is clear
+6. Keep only essential content words
+7. Use ALL CAPS for each gloss word
+8. Separate words with spaces
+
+Format: WORD WORD WORD
+
+Examples:
+- "The student is solving the equation" → "STUDENT EQUATION SOLVE"
+- "I went to school yesterday" → "YESTERDAY SCHOOL I GO"
+- "She will help her friend tomorrow" → "TOMORROW FRIEND SHE HELP"
