@@ -456,30 +456,50 @@ function renderResults(results) {
         return;
     }
 
-    // 1. Setup Split Layout Containers
-    // Left: Visuals (Sticky), Right: Text Analysis (Scrollable)
+    // Check if we have only video results (no image/visual analysis)
+    const hasVisualAnalysis = results.some(item => item.image || item.title.includes('Visual'));
+    const hasOnlyVideo = results.length === 1 && results[0].type === 'video_processor';
+
+    // 1. Setup Layout Containers
     grid.innerHTML = '';
     grid.className = 'results-section-container';
 
-    const layout = document.createElement('div');
-    layout.className = 'results-split-layout';
+    let layout, leftCol, rightCol;
 
-    const leftCol = document.createElement('div');
-    leftCol.className = 'sticky-column space-y-4';
+    if (hasOnlyVideo || !hasVisualAnalysis) {
+        // Use single-column centered layout for video-only or non-visual results
+        layout = document.createElement('div');
+        layout.className = 'space-y-4';
+        layout.style.maxWidth = '1000px';
+        layout.style.margin = '0 auto';
+        grid.appendChild(layout);
+    } else {
+        // Use split layout for mixed content
+        layout = document.createElement('div');
+        layout.className = 'results-split-layout';
 
-    const rightCol = document.createElement('div');
-    rightCol.className = 'space-y-4';
+        leftCol = document.createElement('div');
+        leftCol.className = 'sticky-column space-y-4';
 
-    layout.appendChild(leftCol);
-    layout.appendChild(rightCol);
-    grid.appendChild(layout);
+        rightCol = document.createElement('div');
+        rightCol.className = 'space-y-4';
+
+        layout.appendChild(leftCol);
+        layout.appendChild(rightCol);
+        grid.appendChild(layout);
+    }
 
     // 2. Distribute Cards
     results.forEach(item => {
         // Decide column based on type
-        // Image Explanation -> Left
-        // Others -> Right
-        const targetCol = (item.image || item.title.includes('Visual')) ? leftCol : rightCol;
+        // For single-column layout, append to layout directly
+        // For split layout: Image Explanation -> Left, Others -> Right
+        let targetCol;
+        if (hasOnlyVideo || !hasVisualAnalysis) {
+            targetCol = layout; // Single column
+        } else {
+            targetCol = (item.image || item.title.includes('Visual')) ? leftCol : rightCol;
+        }
 
         const card = document.createElement('div');
         card.className = 'card-professional p-0 animate-fade-in';
